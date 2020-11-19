@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 // Require user model
-
+const User = require('../models/User');
 // Add bcrypt to encrypt passwords
-
+const bcrypt = require('bcrypt');
 // Add passport
+const passport = require('passport');
 
 const ensureLogin = require('connect-ensure-login');
 
