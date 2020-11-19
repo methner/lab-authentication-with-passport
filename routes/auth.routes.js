@@ -10,19 +10,19 @@ const passport = require('passport');
 const ensureLogin = require('connect-ensure-login');
 
 router.get('/private-page', ensureLogin.ensureLoggedIn(), (req, res) => {
-  res.render('passport/private', { user: req.user });
+  res.render('passport/auth/private', { user: req.user });
 });
 
-router.get('/signup', (req, res) => {
+router.get('auth/signup', (req, res) => {
   res.render('auth/signup');
 });
 
-router.get('/login', (req, res) => {
+router.get('auth/login', (req, res) => {
   res.render('auth/login');
 });
 
 
-router.post('/signup', (req, res, next) => {
+router.post('auth/signup', (req, res, next) => {
   const { username, password } = req.body;
   if (password.length < 8) {
     res.render('auth/signup', {
@@ -62,10 +62,10 @@ router.post('/signup', (req, res, next) => {
 
 
 router.post(
-  '/login',
+  'auth/login',
   passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/login',
+    failureRedirect: 'auth/login',
     passReqToCallback: true
   })
 );
