@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 // Require user model
-const User = require('../models/User');
+const User = require('../models/User.model');
 // Add bcrypt to encrypt passwords
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 // Add passport
 const passport = require('passport');
 
@@ -15,6 +15,10 @@ router.get('/private-page', ensureLogin.ensureLoggedIn(), (req, res) => {
 
 router.get('/signup', (req, res) => {
   res.render('auth/signup');
+});
+
+router.get('/login', (req, res) => {
+  res.render('auth/login');
 });
 
 
@@ -56,5 +60,14 @@ router.post('/signup', (req, res, next) => {
   });
 });
 
+
+router.post(
+  '/login',
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    passReqToCallback: true
+  })
+);
 
 module.exports = router;
